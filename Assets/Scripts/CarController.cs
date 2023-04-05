@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class CarController : MonoBehaviour
 {
+    private const string VerticalAxisString = "Vertical";
+    private const string HorizontalAxisString = "Horizontal";
     private float forwardInput;
     private float sideInput;
 
@@ -14,28 +16,26 @@ public class CarController : MonoBehaviour
     public ParticleSystem leftSmoke;
     public ParticleSystem rightSmoke;
 
-    public Color DisableOverheatColor = Color.gray;
-    public Color EnabledOverheatSteamColor = Color.yellow;
-    public Color EnabledOverheatColor = Color.red;
-
-    public bool IsDriverInTheCar;
+    public Color disabledOverheatColor = Color.gray;
+    public Color enabledOverheatSteamColor = Color.yellow;
+    public Color enabledOverheatColor = Color.red;
 
     public Rigidbody Rigidbody { get; private set; }
 
-    public void Start()
+    public void Awake()
     {
         Rigidbody = GetComponent<Rigidbody>();
     }
 
     public void FixedUpdate()
     {
-        if (IsDriverInTheCar == false)
+        if (GameManager.PlayState != GameManager.GameState.Playing)
         {
             return;
         }
 
-        forwardInput = Input.GetAxis("Vertical");
-        sideInput = Input.GetAxis("Horizontal");
+        forwardInput = Input.GetAxis(VerticalAxisString);
+        sideInput = Input.GetAxis(HorizontalAxisString);
 
         Rigidbody.AddRelativeForce(Vector3.forward * forwardInput * driveSpeed, ForceMode.Acceleration);
         Rigidbody.AddTorque(Vector3.up * sideInput * turnSpeed, ForceMode.Acceleration);
@@ -44,7 +44,7 @@ public class CarController : MonoBehaviour
         {
             EnableOverheat();
         }
-        
+
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             DisableOverheat();
@@ -54,21 +54,21 @@ public class CarController : MonoBehaviour
     private void DisableOverheat()
     {
         driveSpeed -= overheatBonusSpeed;
-        Overheat(leftSteamSmoke, DisableOverheatColor);
-        Overheat(rightSteamSmoke, DisableOverheatColor);
+        Overheat(leftSteamSmoke, disabledOverheatColor);
+        Overheat(rightSteamSmoke, disabledOverheatColor);
 
-        Overheat(leftSmoke, DisableOverheatColor);
-        Overheat(rightSmoke, DisableOverheatColor);
+        Overheat(leftSmoke, disabledOverheatColor);
+        Overheat(rightSmoke, disabledOverheatColor);
     }
 
     private void EnableOverheat()
     {
         driveSpeed += overheatBonusSpeed;
-        Overheat(leftSteamSmoke, EnabledOverheatSteamColor);
-        Overheat(rightSteamSmoke, EnabledOverheatSteamColor);
+        Overheat(leftSteamSmoke, enabledOverheatSteamColor);
+        Overheat(rightSteamSmoke, enabledOverheatSteamColor);
 
-        Overheat(leftSmoke, EnabledOverheatColor);
-        Overheat(rightSmoke, EnabledOverheatColor);
+        Overheat(leftSmoke, enabledOverheatColor);
+        Overheat(rightSmoke, enabledOverheatColor);
     }
 
     private void Overheat(ParticleSystem smoke, Color color)

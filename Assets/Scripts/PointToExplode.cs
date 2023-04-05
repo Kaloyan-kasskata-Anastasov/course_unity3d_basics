@@ -1,9 +1,10 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PointToExplode : MonoBehaviour
 {
     public float explodeForce;
-    public UI ui;
+    public UnityEvent<string> onPointExplode;
 
     public void Update()
     {
@@ -14,9 +15,10 @@ public class PointToExplode : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
+                onPointExplode.Invoke(hit.transform.name);
+
                 if (hit.transform.name.Contains("Van") || hit.transform.name.Contains("Crate"))
                 {
-                    ui.UpdateScore(10);
                     ExplodeNear(hit);
                 }
             }

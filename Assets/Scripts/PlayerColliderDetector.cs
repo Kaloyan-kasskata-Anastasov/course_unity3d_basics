@@ -1,16 +1,19 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
-using Object = UnityEngine.Object;
 
 public class PlayerColliderDetector : MonoBehaviour
 {
     public const string ObstacleString = "Obstacle";
     public const string FuelBarrelString = "FuelBarrel";
     public const string GameOverBorderString = "GameOverBorder";
+    private const string RoadString = "Road";
 
     [SerializeField]
-    private UnityEvent<string> onObstacleHit;
+    private UnityEvent<string> onObstacleHit;    
+    
+    [SerializeField]
+    private UnityEvent onNewRoadTrigger;
 
     [SerializeField]
     private UnityEvent onEnterGameOverBorder;
@@ -28,18 +31,24 @@ public class PlayerColliderDetector : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag.Contains(GameOverBorderString))
+        if (other.name.Contains(GameOverBorderString))
         {
             onEnterGameOverBorder.Invoke();
         }
-
-        if (other.gameObject.name.Contains(FuelBarrelString))
+        else if (other.gameObject.name.Contains(FuelBarrelString))
         {
-            onHealthBarrelHit.Invoke(other.GetComponent<Object>());
+            HealthContainer a = other.GetComponent<HealthContainer>();
+            onHealthBarrelHit.Invoke(a);
+        }
+        else if (other.gameObject.name.Contains(RoadString))
+        {
+            onNewRoadTrigger.Invoke();
+            other.GetComponent<Collider>().enabled = false;
         }
     }
 
     [Serializable]
-    public class UnityTransformEvent : UnityEvent<Object>
-    {}
+    public class UnityTransformEvent : UnityEvent<HealthContainer>
+    {
+    }
 }

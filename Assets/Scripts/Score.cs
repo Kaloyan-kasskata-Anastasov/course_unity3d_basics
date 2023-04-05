@@ -24,7 +24,7 @@ public class Score : MonoBehaviour
         }
     }
 
-    public void AnimateScore(int value)
+    public void AnimateScore(uint value)
     {
         scoreText.color = value <= 0 ?
             Color.red : 

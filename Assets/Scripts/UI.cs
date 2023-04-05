@@ -3,67 +3,48 @@ using UnityEngine.UI;
 
 public class UI : MonoBehaviour
 {
-    public float maxHealth = 30;
-
+    [Header("Screens")]
+    [Tooltip("MainMenu screen used for start of the game.")]
     public GameObject mainMenuScreen;
-
     public GameObject gameScreen;
-    public Image healthBar;
-    public Score score;
-
+    
+    [Header("Game Over")]
     public GameObject gameOverScreen;
     public Text gameOverText;
-
-    private uint currentScore;
-    public float currentHealth;
-
-    private void Start()
+    
+    [Header("UI Elements")]
+    public Image healthBar;
+    public Score score;
+    public Text highScore;
+    
+    public void ShowMainScreen()
     {
-        Time.timeScale = 0;
-        currentHealth = maxHealth;
         mainMenuScreen.SetActive(true);
         gameScreen.SetActive(false);
         gameOverScreen.SetActive(false);
         UpdateScore(0);
     }
 
-    private void Update()
+    public void UpdateFuel(float health)
     {
-        currentHealth -= Time.deltaTime;
-        float percentMaxHealth = Mathf.InverseLerp(0, maxHealth, currentHealth);
-        healthBar.fillAmount = percentMaxHealth;
-        if (percentMaxHealth == 0)
-        {
-            ShowGameOver();
-        }
+        healthBar.fillAmount = health;
     }
-
-    public void OnStartGameClicked()
+    
+    public void ShowGameScreen()
     {
-        Time.timeScale = 1;
         mainMenuScreen.SetActive(false);
         gameScreen.SetActive(true);
     }
 
-    public void UpdateHealth(int value)
+    public void UpdateScore(uint value)
     {
-        float clampedValue = currentHealth + value;
-        if (clampedValue < 0)
-        {
-            currentHealth = 0;
-        }
-        else if (clampedValue > maxHealth)
-        {
-            currentHealth = maxHealth;
-        }
+        score.UpdateScore(value);
+        score.AnimateScore(value);
     }
 
-    public void UpdateScore(int value)
+    public void UpdateHighScore(uint value)
     {
-        currentScore += (uint)Mathf.Clamp(value, 0, int.MaxValue);
-        score.UpdateScore(currentScore);
-
-        score.AnimateScore(value);
+        highScore.text = $"High Score {value}";
     }
 
     public void ShowGameOver()
