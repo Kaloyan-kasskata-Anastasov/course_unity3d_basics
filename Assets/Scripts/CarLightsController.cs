@@ -1,16 +1,21 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CarLightsController : MonoBehaviour
 {
-    public void LateUpdate()
+    public InputAction lightInput;
+    private Light[] lights;
+
+    public void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.L))
+        lights = transform.GetComponentsInChildren<Light>();
+
+        lightInput.performed += context =>
         {
-            Light[] lights = transform.GetComponentsInChildren<Light>();
-            foreach (Light light in lights)
+            foreach (Light carLight in lights)
             {
-                light.enabled = !light.enabled;
+                carLight.enabled = !carLight.enabled;
             }
-        }
+        };
     }
 }
