@@ -18,12 +18,16 @@ public class ObstaclesCreator : MonoBehaviour
     private Vector3 roadDimension = new Vector3(7, 0, 190);
     private Transform roadTransformCached;
 
-    public static int Item;
-
     public void Awake()
     {
         roadTransformCached = transform;
         newRoadTrigger = GetComponent<Collider>();
+    }
+
+    public void OnDestroy()
+    {
+        fuelBarrelsPool.Clear();
+        obstaclesPool.Clear();
     }
 
     public void SpawnObstacles(uint obstaclesCount)

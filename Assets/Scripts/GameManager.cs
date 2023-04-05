@@ -51,7 +51,6 @@ public class GameManager : MonoBehaviour
         currentHealth = maxHealth;
         currentScore = 0;
         ui.ShowMainScreen();
-        OnDriverGetToCar();
     }
 
     private void Update()
