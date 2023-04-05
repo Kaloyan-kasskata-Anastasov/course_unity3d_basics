@@ -7,6 +7,7 @@ public class CarController : MonoBehaviour
 
     public int driveSpeed;
     public int turnSpeed;
+    public int overheatBonusSpeed;
 
     public ParticleSystem leftSteamSmoke;
     public ParticleSystem rightSteamSmoke;
@@ -17,12 +18,13 @@ public class CarController : MonoBehaviour
     public Color EnabledOverheatSteamColor = Color.yellow;
     public Color EnabledOverheatColor = Color.red;
 
-    private Rigidbody car;
     public bool IsDriverInTheCar;
+
+    public Rigidbody Rigidbody { get; private set; }
 
     public void Start()
     {
-        car = GetComponent<Rigidbody>();
+        Rigidbody = GetComponent<Rigidbody>();
     }
 
     public void FixedUpdate()
@@ -35,14 +37,15 @@ public class CarController : MonoBehaviour
         forwardInput = Input.GetAxis("Vertical");
         sideInput = Input.GetAxis("Horizontal");
 
-        car.AddRelativeForce(Vector3.forward * forwardInput * driveSpeed, ForceMode.Acceleration);
-        car.AddTorque(Vector3.up * sideInput * turnSpeed, ForceMode.Acceleration);
+        Rigidbody.AddRelativeForce(Vector3.forward * forwardInput * driveSpeed, ForceMode.Acceleration);
+        Rigidbody.AddTorque(Vector3.up * sideInput * turnSpeed, ForceMode.Acceleration);
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             EnableOverheat();
         }
-        else
+        
+        if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             DisableOverheat();
         }
@@ -50,6 +53,7 @@ public class CarController : MonoBehaviour
 
     private void DisableOverheat()
     {
+        driveSpeed -= overheatBonusSpeed;
         Overheat(leftSteamSmoke, DisableOverheatColor);
         Overheat(rightSteamSmoke, DisableOverheatColor);
 
@@ -59,6 +63,7 @@ public class CarController : MonoBehaviour
 
     private void EnableOverheat()
     {
+        driveSpeed += overheatBonusSpeed;
         Overheat(leftSteamSmoke, EnabledOverheatSteamColor);
         Overheat(rightSteamSmoke, EnabledOverheatSteamColor);
 
