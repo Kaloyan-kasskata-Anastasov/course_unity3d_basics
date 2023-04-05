@@ -2,19 +2,13 @@ using UnityEngine;
 
 public class ColliderDetector : MonoBehaviour
 {
+    public UI ui;
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.name.Contains("Crate"))
         {
-            Debug.Log($"{collision.gameObject.name} Hit!");
-        }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.name.Contains("Crate"))
-        {
-            Debug.Log($"{collision.gameObject.name} is just a roadkill!");
+            this.ui.UpdateScore(10);
         }
     }
 
@@ -22,15 +16,13 @@ public class ColliderDetector : MonoBehaviour
     {
         if (collider.name == "GameOverBorder")
         {
-            Debug.Log($"{collider.gameObject.name} DIED");
+            this.ui.ShowGameOver();
         }
-    }
 
-    private void OnTriggerExit(Collider collider)
-    {
-        if (collider.name == "GameOverBorder")
+        if (collider.gameObject.name.Contains("HealthBarrel"))
         {
-            Debug.Log($"{collider.gameObject.name} is lost forever!");
+            ui.UpdateHealth(20);
+            Destroy(collider.gameObject);
         }
     }
 }
