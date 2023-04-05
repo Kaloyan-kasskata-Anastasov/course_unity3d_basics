@@ -8,33 +8,31 @@ public class UI : MonoBehaviour
     public GameObject mainMenuScreen;
 
     public GameObject gameScreen;
-    public Slider healthSlider;
-    public Text scoreText;
+    public Image healthBar;
+    public Score score;
 
     public GameObject gameOverScreen;
     public Text gameOverText;
 
-    private int currentScore;
+    private uint currentScore;
+    public float currentHealth;
 
-    private void Awake()
+    private void Start()
     {
         Time.timeScale = 0;
-
+        currentHealth = maxHealth;
         mainMenuScreen.SetActive(true);
         gameScreen.SetActive(false);
         gameOverScreen.SetActive(false);
-
-        healthSlider.value = maxHealth;
-        healthSlider.maxValue = maxHealth;
-
         UpdateScore(0);
     }
 
     private void Update()
     {
-        healthSlider.value -= Time.deltaTime;
-        
-        if (healthSlider.value <= 0)
+        currentHealth -= Time.deltaTime;
+        float percentMaxHealth = Mathf.InverseLerp(0, maxHealth, currentHealth);
+        healthBar.fillAmount = percentMaxHealth;
+        if (percentMaxHealth == 0)
         {
             ShowGameOver();
         }
@@ -49,13 +47,21 @@ public class UI : MonoBehaviour
 
     public void UpdateHealth(int value)
     {
-        healthSlider.value += value;
+        float clampedValue = currentHealth + value;
+        if (clampedValue < 0)
+        {
+            currentHealth = 0;
+        }
+        else if (clampedValue > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
     }
 
-    public void UpdateScore(int value)
+    public void UpdateScore(uint value)
     {
         currentScore += value;
-        this.scoreText.text = $"Score: {currentScore}";
+        score.UpdateScore(currentScore);
     }
 
     public void ShowGameOver()

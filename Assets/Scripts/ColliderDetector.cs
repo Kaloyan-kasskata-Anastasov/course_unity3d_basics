@@ -8,7 +8,7 @@ public class ColliderDetector : MonoBehaviour
     {
         if (collision.gameObject.name.Contains("Crate"))
         {
-            this.ui.UpdateScore(10);
+            ui.UpdateScore(10);
         }
     }
 
@@ -16,7 +16,7 @@ public class ColliderDetector : MonoBehaviour
     {
         if (collider.name == "GameOverBorder")
         {
-            this.ui.ShowGameOver();
+            ui.ShowGameOver();
         }
 
         if (collider.gameObject.name.Contains("HealthBarrel"))
