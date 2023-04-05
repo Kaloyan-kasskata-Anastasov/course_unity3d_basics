@@ -1,15 +1,17 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class Score : MonoBehaviour
 {
     public Sprite[] digits;
+    public Text scoreText;
     private Image[] numberScore;
+    public Animation scoreAnim;
 
     public void Awake()
     {
         numberScore = transform.GetComponentsInChildren<Image>();
+        this.scoreAnim = GetComponent<Animation>();
     }
 
     public void UpdateScore(uint value)
@@ -22,4 +24,17 @@ public class Score : MonoBehaviour
         }
     }
 
+    public void AnimateScore(int value)
+    {
+        scoreText.color = value <= 0 ?
+            Color.red : 
+            Color.green;
+
+        scoreAnim.Play();
+    }
+
+    public void ReturnColor()
+    {
+        scoreText.color = Color.white;
+    }
 }
