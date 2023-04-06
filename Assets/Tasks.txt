@@ -1,17 +1,27 @@
-1. Remove the "Assets\Scripts\Propeller.cs" from Propeller GameObject. Make the propeller spin with an animation clip. Hint: Make the animation clip to be in "Legacy" mode.
-2. Add to each gate animation to move it in different directions as you like. 		   
-    a. Make different animations for each gate.
-    b. Stop all animations at the start of the game. Keep the first gate's animation switched on.
-    c. When the player (plane) passes the current gate, stop its animation and play the animation to the next gate.
-    e. Make the particle system simulation space be "World" for a more epic experience. :)
-3. Attach the "Assets/Audio/SpitfireLoop.mp3"  audio clip to the plane. Decrease volume level! (~0.15f)
-4. When the player died, change the pitch of the engine sound "smoothly" to 0.1f.
-5. Attach "Assets/Audio/Burn.mp3" to all FlameStreams inside the Gates. Stops all audio sources at the start of the game. 
-Make the audio source 3D sound and fix the max distance to be 30. Change the settings to hear the sound when the player(plane) is near the flames. 
-Link the volume and play the sound when the flames are enabled just like in real life.
-    a. When the flames started, "smoothly" increase the volume to 0.5f. When the flames volume is greater than 0, use the "AudioSource.Play()" method.
-    b. When the player (plane) passes the current gate, decrease the sound "smoothly" to 0. When the current gate's flames volume is equal to 0, use the "AudioSource.Stop()" method.
-HINT: Use the "Assets/Example.mkv" video for more references.
-6. [Optional Task] Implement a music player inside the game.
-Add your favorite song to the project.
-Add a buttons in the UI or/and shortcut key to play/pause/stop the song.
+For more hints look at the "Assets/Example.mkv". Before committing the homework, delete the "Assets/Example.mkv".
+1. Prepare the scene for gate pooling logic
+    a. Delete all predefined gates from the scene.
+2. Gates Pool:
+    b. Use the uploaded prefab from "Assets\Prefabs\Gate.prefab" to spawn the new gates. The gate prefab has a script attached to "Gate.cs" to disable and enable itself. Use it as a hint of how it works.
+    c. Create an empty object "Gates".
+    d. Create "GatesController.cs" file. Attach it to Gates gameObject.
+    e. Open the "GatesController.cs".
+    f. Write a method that will get the next NOT active gate. If it doesn't have any inactive gates, create a new gate.
+    g. Write a method that will get the available gate from the previous method and transform the gate with random rotation and position related to the last passed from the player gate.
+    h. The target of all gates pool count is from 3 or more gates.
+3. GameManager:
+    a. Watch the video lesson again before starting working on that task.
+    b. Create a GameManager.cs script.
+    c. Only the GameManager.cs will know for the UI.cs (have reference to the component) and will control it.
+    d. Move the ColliderDetector.cs (plane gameobject) logic into GameManager.cs. To do that use UnityEvent.Invoke() when the plane hits and trigger something will triggers methods into GameManager.cs.
+    e. Optional: Add a "Obstacle" tag into Tag Manager. Use to gather objects on ColliderDetector.cs OnTriggerEnter().
+    f. Move all "game rules" from other scripts into GameManager.cs use the Coroutines and UnityEvents to decouple the components.
+    g. Create enum called "GameState" inside the GameManager.cs. Add states: 
+        i. "Playing" - when the player plays the game.
+        ii. "Dead" - indicates when the player crashes the plane.
+        iii. "Fail" - indicates when the player fails to pass the max Gates count.
+        iv. "Passed" indicates when the player passed all gates.
+    h. Add public static GameState State into GameManager.cs. Control the game through that field when use it inside the requered scripts e.g. 
+        i. UI.cs - When is dead, succes or fail show the propper gamescreen.
+        ii. PlaneAudio.cs - for pitch sound effect.
+    i. If the tasks are too hard for you always you can go and see the solved tasks in https://github.com/Kaloyan-kasskata-Anastasov/course_unity3d_basics/tree/homework
