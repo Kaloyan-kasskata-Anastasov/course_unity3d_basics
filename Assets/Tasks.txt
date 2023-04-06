@@ -1,8 +1,13 @@
-1. Rework the script ItemDropper.cs file to work with rigidbody. Don't forget to attach rigidbody and collider to the crate template. Remove redundant ItemFalling.cs component from the crate object. 
-2. Add rigidbody to the plane. Change the movement and rotation to be with rigidbody's AddRelativeForce() and AddRelativeTorque() methods.
-4. Create a gate to passes with the plane (see the image "Gate.png" sibling to that file).
-3. Create a script called ColliderDetector.cs and implement the "OnTriggerEnter" method which will detect when to pass the gate then log in to the console "Gate passed!".
-4. In ColliderDetector.cs implement the "OnCollisionEnter" method which will detect when the plane crash on the side of the gate then logs in the console "Plane crashed! Game Over".
-5. [Hard] Raycast forward from the plane. When hitting any collider in the world print in the console "Did Hit {name of the object}". Do that on the "Update" method.
-You can use that code for help with that task https://docs.unity3d.com/ScriptReference/Physics.Raycast.html and https://youtu.be/USwrSUpIgLI
-Important! You can see the result from "Debug.DrawRay" only in the Scene window. Cannot see it inside the Game window.
+1. Create a UI screen space canvas with a slider that indicates a timer. Arrange the timer at the bottom center of the canvas' visible field.
+2. Go to "Assets/Scripts/ColliderDetector.cs" and connect it to the UI script. When player (plane) passing through a gate, adds some amount of time to the UI timer.
+3. Create a new text field. Arrange the text field bottom right corner of the canvas' visible field. Use the text field to count how many gates the plane passes. 
+4. Add an splash screen covering all visible canvas' area. Rename the image's gameobject "GameOverScreen".
+5. Implement a logic that will show the game over splash screen when:
+	a. Crash the plane (implemented in "ColliderDetector.cs"). Show a text "You DIED". Use "Failed.png" for reference.
+	b. The countdown timer is equal to or lower than 0. Show a text "YOU DIED". Use "Failed.png" for reference.
+	c. The player(the plane) passes all gates. Show the text "Passed". Use "Finish.png" for reference.
+6. Create a UI button that will restart the game. Arrange the button at the top left corner of the canvas' visible field.
+	To restart the game use "UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");" https://docs.unity3d.com/ScriptReference/SceneManagement.SceneManager.LoadScene.html
+	To make it work is mandatory to add the scene in the BuildSettings.
+7. Fix the UI anchors to all UI elements to prevent disappearing when resizing the game view.
+HINT: See the example images sibling to that file for more references.
