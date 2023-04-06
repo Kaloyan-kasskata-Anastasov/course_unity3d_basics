@@ -1,0 +1,18 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+public class GateCounter : MonoBehaviour
+{
+    public Text text;
+    public Slider slider;
+
+    public void UpdateUI(int value)
+    {
+        slider.value = value;
+        slider.minValue = 0;
+        slider.maxValue = MaxGates;
+        text.text = $"{value} / {MaxGates}";
+    }
+
+    public int MaxGates { get; set; }
+}

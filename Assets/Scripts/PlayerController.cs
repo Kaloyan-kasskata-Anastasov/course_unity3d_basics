@@ -25,22 +25,22 @@ public class PlayerController : MonoBehaviour
         
         // tilt the plane by vertically
         var input = Input.GetAxis("Vertical");
-        body.AddRelativeTorque(Vector3.right * this.verticalForce * input, ForceMode.Acceleration);
+        body.AddRelativeTorque(Vector3.right * verticalForce * input, ForceMode.Acceleration);
 
         // tilt the plane by horizontally
         input = Input.GetAxis("Horizontal");
-        body.AddRelativeTorque(Vector3.up * this.horizontalForce * input, ForceMode.Acceleration);
+        body.AddRelativeTorque(Vector3.up * horizontalForce * input, ForceMode.Acceleration);
 
         if (Input.GetKey(KeyCode.Q))
         {
-            rollInput = -1;
+            rollInput = 1;
         }
         else if (Input.GetKey(KeyCode.E))
         {
-            rollInput = 1;
+            rollInput = -1;
         }
 
         // roll the plane
-        body.AddRelativeTorque(Vector3.forward * this.rollForce * rollInput, ForceMode.Acceleration);
+        body.AddRelativeTorque(Vector3.forward * rollForce * rollInput, ForceMode.Acceleration);
     }
 }

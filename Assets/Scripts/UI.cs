@@ -1,16 +1,16 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UI : MonoBehaviour
 {
-    public Slider timerUI;
-    public Text gateCouterText;
+    public GateCounter gateCounterUI;
     public Image gameOverScreen;
     public Text gameOverText;
+    public Image timerImage;
 
-    public int timerDefaultValue = 10;
-    public int gateTimeBonusValue = 5;
+    public float timer;
+    public int timerDefaultValue = 5;
+    public int gateTimeBonusValue = 2;
 
     private int gatesPassed = -1;
     private int maxGatesCount;
@@ -18,17 +18,20 @@ public class UI : MonoBehaviour
     public void Start()
     {
         gameOverScreen.gameObject.SetActive(false);
-        timerUI.value = timerDefaultValue;
-        timerUI.minValue = 0;
-        timerUI.maxValue = timerUI.value;
+        timer = timerDefaultValue;
+        timerImage.fillAmount = 1;
         maxGatesCount = GameObject.Find("Obstacles").transform.childCount;
+        gateCounterUI.MaxGates = maxGatesCount;
         UpdateGateCounter();
     }
 
     public void Update()
     {
-        timerUI.value -= Time.deltaTime;
-        if (timerUI.value <= 0)
+        timer -= Time.deltaTime;
+        float percentMaxHealth = Mathf.InverseLerp(0, this.timerDefaultValue, this.timer);
+        timerImage.fillAmount = percentMaxHealth;
+
+        if (timer <= 0)
         {
             ShowGameOverScreenFail();
         }
@@ -41,13 +44,13 @@ public class UI : MonoBehaviour
 
     public void UpdateTimer()
     {
-        timerUI.value += gateTimeBonusValue;
+        timer += gateTimeBonusValue;
     }
 
     public void UpdateGateCounter()
     {
         gatesPassed += 1;
-        gateCouterText.text = $"{gatesPassed} / {maxGatesCount}";
+        gateCounterUI.UpdateUI(gatesPassed);
     }
 
     public void ShowGameOverScreenPassed()
