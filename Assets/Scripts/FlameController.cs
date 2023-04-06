@@ -7,10 +7,10 @@ public class FlameController : MonoBehaviour
 
     public void ToggleFlames(bool playing)
     {
-        ParticleSystem.EmissionModule emission = this.leftFlame.emission;
+        ParticleSystem.EmissionModule emission = leftFlame.emission;
         emission.enabled = playing;
 
-        emission = this.rightFlame.emission;
+        emission = rightFlame.emission;
         emission.enabled = playing;
     }
 }

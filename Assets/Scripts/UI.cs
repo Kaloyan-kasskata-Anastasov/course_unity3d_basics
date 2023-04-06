@@ -28,7 +28,7 @@ public class UI : MonoBehaviour
     public void Update()
     {
         timer -= Time.deltaTime;
-        float percentMaxHealth = Mathf.InverseLerp(0, this.timerDefaultValue, this.timer);
+        float percentMaxHealth = Mathf.InverseLerp(0, timerDefaultValue, timer);
         timerImage.fillAmount = percentMaxHealth;
 
         if (timer <= 0)
