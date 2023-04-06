@@ -18,16 +18,16 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        var rollInput = 0;
+        int rollInput = 0;
 
         // Push the plane forward
         body.AddRelativeForce(Vector3.forward * forwardForce, ForceMode.Acceleration);
         
-        // tilt the plane by vertically
-        var input = Input.GetAxis("Vertical");
+        // tilt the plane vertically
+        float input = Input.GetAxis("Vertical");
         body.AddRelativeTorque(Vector3.right * verticalForce * input, ForceMode.Acceleration);
 
-        // tilt the plane by horizontally
+        // tilt the plane horizontally
         input = Input.GetAxis("Horizontal");
         body.AddRelativeTorque(Vector3.up * horizontalForce * input, ForceMode.Acceleration);
 

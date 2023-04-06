@@ -3,74 +3,46 @@ using UnityEngine.UI;
 
 public class UI : MonoBehaviour
 {
-    public GateCounter gateCounterUI;
-    public Image gameOverScreen;
+    [SerializeField]
+    private Image gameOverScreen;
     public Text gameOverText;
     public Image timerImage;
-
-    public float timer;
-    public int timerDefaultValue = 5;
-    public int gateTimeBonusValue = 2;
-
-    private int gatesPassed = -1;
-    private int maxGatesCount;
+    public GateCounterUI GateCounterUi;
 
     public void Start()
     {
         gameOverScreen.gameObject.SetActive(false);
-        timer = timerDefaultValue;
         timerImage.fillAmount = 1;
-        maxGatesCount = GameObject.Find("Obstacles").transform.childCount;
-        gateCounterUI.MaxGates = maxGatesCount;
-        UpdateGateCounter();
     }
 
-    public void Update()
+    public void UpdateTimer(float value, int max)
     {
-        timer -= Time.deltaTime;
-        float percentMaxHealth = Mathf.InverseLerp(0, timerDefaultValue, timer);
-        timerImage.fillAmount = percentMaxHealth;
-
-        if (timer <= 0)
-        {
-            ShowGameOverScreenFail();
-        }
-
-        if (gatesPassed >= maxGatesCount)
-        {
-            ShowGameOverScreenPassed();
-        }
+        timerImage.fillAmount = Mathf.InverseLerp(0, max, value);
     }
 
-    public void UpdateTimer()
+    public void UpdateGateCounter(int value, int maxGates)
     {
-        timer += gateTimeBonusValue;
-    }
-
-    public void UpdateGateCounter()
-    {
-        gatesPassed += 1;
-        gateCounterUI.UpdateUI(gatesPassed);
+        GateCounterUi.UpdateUI(value, maxGates);
     }
 
     public void ShowGameOverScreenPassed()
     {
         gameOverScreen.gameObject.SetActive(true);
-        gameOverText.text = "Passed";
+        gameOverText.text = GameManager.State.ToString().ToUpper();
         gameOverText.color = Color.green;
     }
 
     public void ShowGameOverScreenDeath()
     {
         gameOverScreen.gameObject.SetActive(true);
-        gameOverText.text = "YOU DIED";
+        gameOverText.text = GameManager.State.ToString().ToUpper();
         gameOverText.color = Color.red;
     }
 
     public void ShowGameOverScreenFail()
     {
         gameOverScreen.gameObject.SetActive(true);
-        gameOverText.text = "FAILED";
+        gameOverText.text = GameManager.State.ToString().ToUpper();
         gameOverText.color = Color.red;
     }
 
