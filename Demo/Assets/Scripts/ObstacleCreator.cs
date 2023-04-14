@@ -13,7 +13,7 @@ public class ObstacleCreator : MonoBehaviour
             float x = Random.Range(road.position.x - roadDimension.x, road.position.x + roadDimension.x);
             float z = Random.Range(road.position.z - roadDimension.z, road.position.z + roadDimension.z);
             Vector3 position = new Vector3(x, 0, z);
-            var gameObject = GameObject.Instantiate(obstacle, position, Quaternion.identity);
+            GameObject gameObject = GameObject.Instantiate(obstacle, position, Quaternion.identity);
             gameObject.name = $"Crate№_{i}";
         }  
     }

@@ -3,6 +3,7 @@ using UnityEngine;
 public class PointToExplode : MonoBehaviour
 {
     public float explodeForce;
+    public UI ui;
 
     public void Update()
     {
@@ -15,6 +16,7 @@ public class PointToExplode : MonoBehaviour
             {
                 if (hit.transform.name.Contains("Van") || hit.transform.name.Contains("Crate"))
                 {
+                    ui.UpdateScore(10);
                     ExplodeNear(hit);
                 }
             }

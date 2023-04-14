@@ -6,7 +6,7 @@ public class CarLightsController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.L))
         {
-            var lights = transform.GetComponentsInChildren<Light>();
+            Light[] lights = transform.GetComponentsInChildren<Light>();
             foreach (Light light in lights)
             {
                 light.enabled = !light.enabled;
