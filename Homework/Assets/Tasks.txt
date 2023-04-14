@@ -1,10 +1,17 @@
-1. Add a slider that indicates how many of the total number of gates the player passes. Change the default image resource of the slider with sprites provided in "Assets/Textures/HUD.png". Keep the counter text. For reference see the "Assets/Example.mkv".
-2. Change timer from slider to filled type image. Use the "Assets/Textures/Timer.png" asset. For reference see the "Assets/Example.mkv".
-3. Rework the gates. 
-	a. Disable the left and the right beams' renderers. Keep the colliders.
-	b. Place Flame Stream from "Assets/ParticleSystems/FlameStream.prefab" on the beams's place. Fix the ParticleSystem component's properties as you like.
-	c. Place the flames on the beams' places and "curve" the fire to produce a shape like an arc.
-4. Duplicate the reworked gate at least 4 times in a random location through the editor.
-5. The first gate flames will emit at play state. Stop the emitting to all other gates.
-6. When the player (plane) crosses the current gate, stop its flames and ignite the next gate flames. For reference see the "Assets/Example.mkv".
-Warning: Before send the homework delete "Assets/Example.mkv".
+1. Remove the "Assets\Scripts\Propeller.cs" from Propeller GameObject. Make the propeller spin with an animation clip. Hint: Make the animation clip to be in "Legacy" mode.
+2. Add to each gate animation to move it in different directions as you like. 		   
+    a. Make different animations for each gate.
+    b. Stop all animations at the start of the game. Keep the first gate's animation switched on.
+    c. When the player (plane) passes the current gate, stop its animation and play the animation to the next gate.
+    e. Make the particle system simulation space be "World" for a more epic experience. :)
+3. Attach the "Assets/Audio/SpitfireLoop.mp3"  audio clip to the plane. Decrease volume level! (~0.15f)
+4. When the player died, change the pitch of the engine sound "smoothly" to 0.1f.
+5. Attach "Assets/Audio/Burn.mp3" to all FlameStreams inside the Gates. Stops all audio sources at the start of the game. 
+Make the audio source 3D sound and fix the max distance to be 30. Change the settings to hear the sound when the player(plane) is near the flames. 
+Link the volume and play the sound when the flames are enabled just like in real life.
+    a. When the flames started, "smoothly" increase the volume to 0.5f. When the flames volume is greater than 0, use the "AudioSource.Play()" method.
+    b. When the player (plane) passes the current gate, decrease the sound "smoothly" to 0. When the current gate's flames volume is equal to 0, use the "AudioSource.Stop()" method.
+HINT: Use the "Assets/Example.mkv" video for more references.
+6. [Optional Task] Implement a music player inside the game.
+Add your favorite song to the project.
+Add a buttons in the UI or/and shortcut key to play/pause/stop the song.

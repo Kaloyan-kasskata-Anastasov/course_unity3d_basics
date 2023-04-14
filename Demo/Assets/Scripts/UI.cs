@@ -58,10 +58,12 @@ public class UI : MonoBehaviour
         }
     }
 
-    public void UpdateScore(uint value)
+    public void UpdateScore(int value)
     {
-        currentScore += value;
+        currentScore += (uint)Mathf.Clamp(value, 0, int.MaxValue);
         score.UpdateScore(currentScore);
+
+        this.score.AnimateScore(value);
     }
 
     public void ShowGameOver()

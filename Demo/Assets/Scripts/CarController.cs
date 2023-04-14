@@ -18,6 +18,7 @@ public class CarController : MonoBehaviour
     public Color EnabledOverheatColor = Color.red;
 
     private Rigidbody car;
+    public bool IsDriverInTheCar;
 
     public void Start()
     {
@@ -26,6 +27,11 @@ public class CarController : MonoBehaviour
 
     public void FixedUpdate()
     {
+        if (IsDriverInTheCar == false)
+        {
+            return;
+        }
+
         forwardInput = Input.GetAxis("Vertical");
         sideInput = Input.GetAxis("Horizontal");
 
@@ -44,20 +50,20 @@ public class CarController : MonoBehaviour
 
     private void DisableOverheat()
     {
-        Overheat(leftSteamSmoke, this.DisableOverheatColor);
-        Overheat(rightSteamSmoke, this.DisableOverheatColor);
+        Overheat(leftSteamSmoke, DisableOverheatColor);
+        Overheat(rightSteamSmoke, DisableOverheatColor);
 
-        Overheat(rightSmoke, this.DisableOverheatColor);
-        Overheat(rightSmoke, this.DisableOverheatColor);
+        Overheat(leftSmoke, DisableOverheatColor);
+        Overheat(rightSmoke, DisableOverheatColor);
     }
 
     private void EnableOverheat()
     {
-        Overheat(leftSteamSmoke, this.EnabledOverheatSteamColor);
-        Overheat(rightSteamSmoke, this.EnabledOverheatSteamColor);
+        Overheat(leftSteamSmoke, EnabledOverheatSteamColor);
+        Overheat(rightSteamSmoke, EnabledOverheatSteamColor);
 
-        Overheat(leftSmoke, this.EnabledOverheatColor);
-        Overheat(rightSmoke, this.EnabledOverheatColor);
+        Overheat(leftSmoke, EnabledOverheatColor);
+        Overheat(rightSmoke, EnabledOverheatColor);
     }
 
     private void Overheat(ParticleSystem smoke, Color color)
