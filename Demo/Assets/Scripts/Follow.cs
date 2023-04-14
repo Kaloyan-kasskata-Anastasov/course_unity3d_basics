@@ -1,15 +1,37 @@
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class Follow : MonoBehaviour
 {
-    public GameObject Target;
+    public Transform target;
     public Vector3 Position = new Vector3(0, 5, 10);
-    public Quaternion Rotation = new Quaternion(0, 0, 0, 0);
+    public bool freezeY = true;
+    public bool lookTarget = true;
+    private Transform transformCached;
+    private Vector3 currentPosition;
+
+    public void Awake()
+    {
+        transformCached = transform;
+    }
 
     public void LateUpdate()
     {
-        transform.position = Target.transform.position - Position;
-        transform.LookAt(Target.transform);
+        if (freezeY)
+        {
+            currentPosition.x = target.position.x - Position.x;
+            currentPosition.y = transformCached.position.y;
+            currentPosition.z = target.position.z - Position.z;
+        }
+        else
+        {
+            currentPosition = target.position - Position;
+        }
+
+        transformCached.position = currentPosition;
+
+        if (lookTarget)
+        {
+            transformCached.LookAt(target);
+        }
     }
 }
