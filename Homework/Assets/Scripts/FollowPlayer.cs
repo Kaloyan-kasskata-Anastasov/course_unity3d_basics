@@ -6,6 +6,12 @@ public class FollowPlayer : MonoBehaviour
     public Vector3 offset;
     public float smoothSpeed = 0.125f;
 
+    // Start is called before the first frame update
+    void Start()
+    {
+
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
