@@ -11,7 +11,7 @@ public class Score : MonoBehaviour
     public void Awake()
     {
         numberScore = transform.GetComponentsInChildren<Image>();
-        this.scoreAnim = GetComponent<Animation>();
+        scoreAnim = GetComponent<Animation>();
     }
 
     public void UpdateScore(uint value)
