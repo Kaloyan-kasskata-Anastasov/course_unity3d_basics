@@ -18,7 +18,7 @@ public class ColliderDetector : MonoBehaviour
 
     private void UpdateFlames(Collider other)
     {
-        other.transform.parent.GetComponent<FlameController>().ToggleFlames(false);
+        other.transform.parent.GetComponent<Gate>().ToggleFlames(false);
         other.transform.parent.GetComponent<Animation>().Stop();
 
         int index = other.transform.parent.GetSiblingIndex();
@@ -29,7 +29,7 @@ public class ColliderDetector : MonoBehaviour
             Transform nextGate = other.transform.parent.parent.GetChild(index);
             if (nextGate)
             {
-                nextGate.GetComponent<FlameController>().ToggleFlames(true);
+                nextGate.GetComponent<Gate>().ToggleFlames(true);
                 nextGate.GetComponent<Animation>().Play();
             }
         }
