@@ -49,8 +49,9 @@ public class UI : MonoBehaviour
 
     public void ShowGameOver()
     {
-        gameScreen.SetActive(false);
         gameOverScreen.SetActive(true);
+        gameScreen.SetActive(false);
+        mainMenuScreen.SetActive(false);
         gameOverText.text = "YOU DIED";
         gameOverText.color = new Color(154, 0, 0, 255);
 
