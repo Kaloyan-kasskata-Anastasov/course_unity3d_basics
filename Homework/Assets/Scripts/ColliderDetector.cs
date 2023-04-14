@@ -3,6 +3,7 @@ using UnityEngine;
 public class ColliderDetector : MonoBehaviour
 {
     public UI gameUI;
+    public PlaneAudio planeAudio;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -17,16 +18,19 @@ public class ColliderDetector : MonoBehaviour
 
     private void UpdateFlames(Collider other)
     {
-        other.GetComponent<FlameController>().ToggleFlames(false);
+        other.transform.parent.GetComponent<FlameController>().ToggleFlames(false);
+        other.transform.parent.GetComponent<Animation>().Stop();
 
-        int index = other.transform.GetSiblingIndex();
+        int index = other.transform.parent.GetSiblingIndex();
 
-        if (other.transform.parent.childCount > index + 1)
+        if (other.transform.parent.parent.childCount > index + 1)
         {
-            Transform nextNode = other.transform.parent.GetChild(index + 1);
-            if (nextNode)
+            index += 1;
+            Transform nextGate = other.transform.parent.parent.GetChild(index);
+            if (nextGate)
             {
-                nextNode.transform.GetComponent<FlameController>().ToggleFlames(true);
+                nextGate.GetComponent<FlameController>().ToggleFlames(true);
+                nextGate.GetComponent<Animation>().Play();
             }
         }
     }
@@ -34,6 +38,7 @@ public class ColliderDetector : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         gameUI.ShowGameOverScreenDeath();
+        planeAudio.IsDead = true;
     }
 
     private void FixedUpdate()
