@@ -1,15 +1,19 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 
 public class CarController : MonoBehaviour
 {
-    private const string VerticalAxisString = "Vertical";
-    private const string HorizontalAxisString = "Horizontal";
     private float forwardInput;
     private float sideInput;
 
     public int driveSpeed;
     public int turnSpeed;
     public int overheatBonusSpeed;
+
+    public InputAction horizontalInput;
+    public InputAction verticalInput;
+    public InputAction overheatInput;
 
     public ParticleSystem leftSteamSmoke;
     public ParticleSystem rightSteamSmoke;
@@ -25,6 +29,53 @@ public class CarController : MonoBehaviour
     public void Awake()
     {
         Rigidbody = GetComponent<Rigidbody>();
+        horizontalInput.performed += context => ProcessInput(context, ref sideInput);
+        horizontalInput.canceled += context => ProcessInput(context, ref sideInput);
+
+        verticalInput.performed += context => ProcessInput(context, ref forwardInput);
+        verticalInput.canceled += context => ProcessInput(context, ref forwardInput);
+
+        overheatInput.performed += ProcessOverheat;
+        overheatInput.canceled += ProcessOverheat;
+    }
+
+    private void ProcessInput(InputAction.CallbackContext context, ref float input)
+    {
+        input = context.ReadValue<float>();
+    }
+
+    public void OnEnable()
+    {
+        horizontalInput.Enable();
+        verticalInput.Enable();
+        overheatInput.Enable();
+    }
+
+    public void OnDisable()
+    {
+        horizontalInput.Disable();
+        verticalInput.Disable();
+        overheatInput.Disable();
+    }
+
+    public void OnDestroy()
+    {
+        horizontalInput.Dispose();
+        verticalInput.Dispose();
+        overheatInput.Dispose();
+    }
+
+    private void ProcessOverheat(InputAction.CallbackContext context)
+    {
+        bool pressed = ((ButtonControl) context.control).isPressed;
+        if (pressed)
+        {
+            EnableOverheat();
+        }
+        else
+        {
+            DisableOverheat();
+        }
     }
 
     public void FixedUpdate()
@@ -34,21 +85,8 @@ public class CarController : MonoBehaviour
             return;
         }
 
-        forwardInput = Input.GetAxis(VerticalAxisString);
-        sideInput = Input.GetAxis(HorizontalAxisString);
-
         Rigidbody.AddRelativeForce(Vector3.forward * forwardInput * driveSpeed, ForceMode.Acceleration);
         Rigidbody.AddTorque(Vector3.up * sideInput * turnSpeed, ForceMode.Acceleration);
-
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            EnableOverheat();
-        }
-
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            DisableOverheat();
-        }
     }
 
     private void DisableOverheat()

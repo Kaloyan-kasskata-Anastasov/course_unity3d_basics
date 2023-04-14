@@ -2144,6 +2144,89 @@ MonoBehaviour:
   driveSpeed: 60
   turnSpeed: 10
   overheatBonusSpeed: 10
+  horizontalInput:
+    m_Name: Horizontal Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 15105e7b-1bad-41cb-af95-5bd897cfac96
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 1D Axis
+      m_Id: b7e751bc-3f3a-40cb-a965-f896821e6aa3
+      m_Path: 1DAxis
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Horizontal Input
+      m_Flags: 4
+    - m_Name: negative
+      m_Id: d0948348-74d9-4889-90a9-a5bfbb031794
+      m_Path: <Keyboard>/a
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Horizontal Input
+      m_Flags: 8
+    - m_Name: positive
+      m_Id: e816d88b-62d7-47c4-b569-09a6660a834b
+      m_Path: <Keyboard>/d
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Horizontal Input
+      m_Flags: 8
+    m_Flags: 0
+  verticalInput:
+    m_Name: Vertical Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: cc39378b-77ac-4f4c-b63f-9167a9f947c4
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 1D Axis
+      m_Id: 35ad8528-8d21-4051-8f34-b79a480b0dee
+      m_Path: 1DAxis
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Vertical Input
+      m_Flags: 4
+    - m_Name: negative
+      m_Id: 23133cb8-e169-4523-be65-ff627fdab73c
+      m_Path: <Keyboard>/s
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Vertical Input
+      m_Flags: 8
+    - m_Name: positive
+      m_Id: 52f29625-ff85-4318-b58c-a7cf982b223c
+      m_Path: <Keyboard>/w
+      m_Interactions: 
+      m_Processors: Normalize(max=-1)
+      m_Groups: 
+      m_Action: Vertical Input
+      m_Flags: 8
+    m_Flags: 0
+  overheatInput:
+    m_Name: Overheat Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 8738448f-2454-4ece-8194-b5a5e7a800df
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: bb7de230-27c0-469a-991b-3d23735f457e
+      m_Path: <Keyboard>/shift
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Overheat Input
+      m_Flags: 0
+    m_Flags: 0
   leftSteamSmoke: {fileID: 559047450}
   rightSteamSmoke: {fileID: 571582023}
   leftSmoke: {fileID: 917555219}
@@ -2163,6 +2246,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d63ecd8a9152e34c8473aec8bda8e7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lightInput:
+    m_Name: Light Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 592ca6bf-add9-4578-97ce-e0c91c5c6a3f
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: ae49c1af-287f-4713-a70d-8d7d678aba6a
+      m_Path: <Keyboard>/l
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Light Input
+      m_Flags: 0
+    m_Flags: 0
 --- !u!54 &655400941
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3986,17 +4086,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 1883092671}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_SendPointerHoverToParent: 1
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
 --- !u!114 &1883092673
 MonoBehaviour:
   m_ObjectHideFlags: 0
