@@ -2,28 +2,35 @@
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed;
-    public float rotationSpeed;
-    public float verticalInput;
-    public float horizontalInput;
-    public float rollInput;
+    public float forwardForce;
+    public float verticalForce;
+    public float horizontalForce;
+    public float rollForce;
+
+    private Rigidbody body;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        body = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        rollInput = 0;
-        transform.Translate(Vector3.forward * speed);
+        var rollInput = 0;
+
+        // Push the plane forward
+        body.AddRelativeForce(Vector3.forward * forwardForce, ForceMode.Acceleration);
         
-        // get the user's vertical input
-        verticalInput = Input.GetAxis("Vertical");
-        // get the user's vertical input
-        horizontalInput = Input.GetAxis("Horizontal");
+        // tilt the plane by vertically
+        var input = Input.GetAxis("Vertical");
+        body.AddRelativeTorque(Vector3.right * this.verticalForce * input, ForceMode.Acceleration);
+
+        // tilt the plane by horizontally
+        input = Input.GetAxis("Horizontal");
+        body.AddRelativeTorque(Vector3.up * this.horizontalForce * input, ForceMode.Acceleration);
+
         if (Input.GetKey(KeyCode.Q))
         {
             rollInput = -1;
@@ -33,9 +40,7 @@ public class PlayerController : MonoBehaviour
             rollInput = 1;
         }
 
-        // tilt the plane up/down/left/right based on arrow keys
-        transform.Rotate(Vector3.right * rotationSpeed * Time.deltaTime * verticalInput);
-        transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime * horizontalInput);
-        transform.Rotate(Vector3.back * rotationSpeed * Time.deltaTime * rollInput);
-    }   
+        // roll the plane
+        body.AddRelativeTorque(Vector3.forward * this.rollForce * rollInput, ForceMode.Acceleration);
+    }
 }
