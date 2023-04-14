@@ -6,11 +6,11 @@ public class DriverAI : MonoBehaviour
 
     private void Start()
     {
-        this.body = GetComponent<Rigidbody>();
+        body = GetComponent<Rigidbody>();
     }
 
     private void Update()
     {
-        this.body.AddRelativeForce(new Vector3(0, 0, 10), ForceMode.Acceleration);
+        body.AddRelativeForce(new Vector3(0, 0, 10), ForceMode.Acceleration);
     }
 }
