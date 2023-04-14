@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class PlaneAudio : MonoBehaviour
 {
-    public bool IsDead { get; set; }
     public float minPitchEngine;
     private AudioSource source;
 
@@ -13,7 +12,7 @@ public class PlaneAudio : MonoBehaviour
 
     public void Update()
     {
-        if (IsDead)
+        if (GameManager.State == GameManager.GameState.Dead)
         {
             if (source.pitch >= minPitchEngine)
             {
