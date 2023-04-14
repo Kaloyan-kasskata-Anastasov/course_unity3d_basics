@@ -2,22 +2,32 @@ using UnityEngine;
 
 public class ColliderDetector : MonoBehaviour
 {
-    enum Status
-    {
-        Playing,
-        Passed,
-        Failed,
-        Dead
-    }
-
     public UI gameUI;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name == "GateDetector")
+        if (other.name.Contains("Gate"))
         {
             gameUI.UpdateTimer();
             gameUI.UpdateGateCounter();
+
+            UpdateFlames(other);
+        }
+    }
+
+    private void UpdateFlames(Collider other)
+    {
+        other.GetComponent<FlameController>().ToggleFlames(false);
+
+        int index = other.transform.GetSiblingIndex();
+
+        if (other.transform.parent.childCount > index + 1)
+        {
+            Transform nextNode = other.transform.parent.GetChild(index + 1);
+            if (nextNode)
+            {
+                nextNode.transform.GetComponent<FlameController>().ToggleFlames(true);
+            }
         }
     }
 
