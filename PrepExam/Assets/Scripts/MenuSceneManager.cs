@@ -1,16 +1,17 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MenuSceneManager : MonoBehaviour
 {
-	public void OnLoadGameScene()
+	void Awake()
 	{
-		SceneManager.LoadScene("MainScene");
+		Application.targetFrameRate = 60;
 	}
 
-	public void OnExitGame()
+	public void LoadRacingScene()
 	{
-		Application.Quit();
-		Debug.Log("Exit Game");
+		SceneManager.LoadScene("RacingScene");
 	}
 }
